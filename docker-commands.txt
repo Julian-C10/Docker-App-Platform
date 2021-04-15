@@ -1,0 +1,12 @@
+set-variable -name DISPLAY -value youripaddress
+docker run -it --privileged -e DISPLAY=$DISPLAY yourreponamehere
+docker build -t gui .
+docker run -it --privileged -e DISPLAY=$DISPLAY gui
+docker run -it --privileged -e DISPLAY=10.0.0.74:0 -v /tmp/.X11-unix:/tmp/.X11-unix gui
+docker tag gui asap397/gui:first
+docker push asap397/gui:first
+
+docker rm -f $(docker ps -a -q) 
+docker rmi -f $(docker images -q) 
+docker system prune -a 
+docker image prune
